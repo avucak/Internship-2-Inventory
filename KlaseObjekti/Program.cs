@@ -325,7 +325,12 @@ namespace KlaseObjekti
                             Console.WriteLine("U inventaru ne postoji taj serijski broj");
                         break;
                     case "4":
-
+                        Console.WriteLine("Za koju godinu želite popis računala kojima garancija tada istječe:");
+                        var yearEx = int.Parse(Console.ReadLine());
+                        var warrantyExpires = new List<Computer>();
+                        ListComputersByYear(yearEx, computers, warrantyExpires);
+                        foreach (var c in warrantyExpires)
+                            Console.WriteLine($"serijski broj {c.SerialNumber}, kupljen: {c.PurchaseDate}, mjeseci garancije:{c.WarrantyLength} ");
                         break;
                     case "5":
 
@@ -425,6 +430,16 @@ namespace KlaseObjekti
                 erased = true;
             }
             return erased;
+        }
+
+        static void ListComputersByYear(int year,List<Computer>computers,List<Computer>warrantyExpires)
+        {
+            foreach (Computer c in computers)
+            {
+                if (c.PurchaseDate.AddMonths(c.WarrantyLength).Year==year)
+                    warrantyExpires.Add(c);
+
+            }
         }
 
 
