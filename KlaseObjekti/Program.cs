@@ -290,7 +290,39 @@ namespace KlaseObjekti
                             Console.WriteLine("Niste odabrali neku od postojećih opcija, brisanje prekinuto");
                         break;
                     case "3":
-
+                        Console.WriteLine("Unesite serijski broj: ");
+                        var serialNumber = Console.ReadLine();
+                        var found = false;
+                        foreach (var c in computers)
+                        {
+                            if (c.SerialNumber.ToString() == serialNumber)
+                            {
+                                Console.WriteLine($"Opis: {c.Description} kupljen:{c.PurchaseDate} garancija:{c.WarrantyLength} cijena:{c.Price}"
+                                      + $" proizvođač:{c.ComputerManufacturer} baterije:{c.Batteries} os:{c.OS} laptop:{c.Laptop}");
+                                found = true;
+                            }
+                        }
+                        foreach (var m in mobilePhones)
+                        {
+                            if (m.SerialNumber.ToString() == serialNumber)
+                            {
+                                Console.WriteLine($"Opis: {m.Description} kupljen:{m.PurchaseDate} garancija:{m.WarrantyLength} cijena:{m.Price}"
+                                    + $" proizvođač:{m.PhoneManufacturer} baterije:{m.Batteries} ime vlasnika:{m.OwnerName}" +
+                                    $" prezime vlasnika:{m.OwnerSurname} broj:{m.PhoneNumber}");
+                                found = true;
+                            }
+                        }
+                        foreach (var v in vehicles)
+                        {
+                            if (v.SerialNumber.ToString() == serialNumber)
+                            {
+                                Console.WriteLine($"Opis: {v.Description} kupljen:{v.PurchaseDate} garancija:{v.WarrantyLength} cijena:{v.Price}"
+                                      + $" proizvođač:{v.VehicleManufacturer} registracija do:{v.RegistrationExpiration} kilometraža:{v.Mileage}");
+                                found = true;
+                            }
+                        }
+                        if (!found)
+                            Console.WriteLine("U inventaru ne postoji taj serijski broj");
                         break;
                     case "4":
 
