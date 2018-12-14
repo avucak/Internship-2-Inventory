@@ -14,7 +14,7 @@ namespace KlaseObjekti
         {
             OS = os;
             Laptop = laptop;
-            ComputerManufacturer = ComputerManufacturer;
+            ComputerManufacturer = computerManufacturer;
         }
     }
     public enum ComputerManufacturer

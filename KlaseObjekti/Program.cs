@@ -7,7 +7,7 @@ namespace KlaseObjekti
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Moguće opcije: \n1. Dodavanje \n2.Brisanje \n3.Ispis preko unesenog serijskog broja" +
+            Console.WriteLine("Moguće opcije: \n1.Dodavanje \n2.Brisanje \n3.Ispis preko unesenog serijskog broja" +
                 "\n4.Ispis računala kojima garancija ističe nekoj godini"+
                 "\n5.Ispis koliko komada tehnološke opreme ima baterije \n6.Ispis svih mobitela određene marke"+
                 "\n7.Ispis računala s određenim operacijskim sustavom"+
@@ -18,6 +18,7 @@ namespace KlaseObjekti
             List<Computer> computers=new List<Computer>();
             List<MobilePhone> mobilePhones=new List<MobilePhone>();
             List<Vehicle> vehicles=new List<Vehicle>();
+            
             Initialize(computers, mobilePhones, vehicles);
            
             string choice;
@@ -240,7 +241,53 @@ namespace KlaseObjekti
                             Console.WriteLine("Niste odabrali neku od postojećih opcija, unos prekinut");
                         break;
                     case "2":
+                        Console.WriteLine("Za brisanje kompjutera unesite 1, mobitela 2, vozila 3");
+                        choice2 = Console.ReadLine();
+                        if (choice2 == "1")
+                        {
+                            var serialN = "";
+                            foreach (var c in computers)
+                            {
+                                Console.WriteLine(c.SerialNumber.ToString() + " " + c.ComputerManufacturer + " " + c.OS); 
+                            }
+                            Console.WriteLine("Unesite prvih 5 znakova serijskog broja racunala koje zelite obrisati: ");
+                            serialN = Console.ReadLine();
+                            if (EraseComputer(serialN, computers))
+                                Console.WriteLine("Obrisan");
+                            else
+                                Console.WriteLine("Brisanje nije uspjelo");
 
+                        }
+                        else if (choice2 == "2")
+                        {
+                            var serialN = "";
+                            foreach (var m in mobilePhones)
+                            {
+                                Console.WriteLine(m.SerialNumber.ToString() + " " + m.PhoneManufacturer.ToString() + " " + m.PhoneNumber);
+                            }
+                            Console.WriteLine("Unesite prvih 5 znakova serijskog broja mobitela koje zelite obrisati: ");
+                            serialN = Console.ReadLine();
+                            if (ErasePhone(serialN, mobilePhones))
+                                Console.WriteLine("Obrisan");
+                            else
+                                Console.WriteLine("Brisanje nije uspjelo");
+                        }
+                        else if (choice2 == "3")
+                        {
+                            var serialN = "";
+                            foreach (var v in vehicles)
+                            {
+                                Console.WriteLine(v.SerialNumber.ToString() + " " + v.VehicleManufacturer);
+                            }
+                            Console.WriteLine("Unesite prvih 5 znakova serijskog broja vozila koje zelite obrisati: ");
+                            serialN = Console.ReadLine();
+                            if (EraseVehicle(serialN, vehicles))
+                                Console.WriteLine("Obrisan");
+                            else
+                                Console.WriteLine("Brisanje nije uspjelo");
+                        }
+                        else
+                            Console.WriteLine("Niste odabrali neku od postojećih opcija, brisanje prekinuto");
                         break;
                     case "3":
 
@@ -275,41 +322,79 @@ namespace KlaseObjekti
         }
         static void Initialize(List<Computer>computers,List<MobilePhone>mobilePhones,List<Vehicle>vehicles)
         {
-            computers = new List<Computer>()
-            {
-                new Computer("oštećen",new DateTime(2005,11,23),36,5500,ComputerManufacturer.Acer,true,OperatingSystem.Linux,true),
-                new Computer("vrlo skup",new DateTime(2013,1,3),50,15500,ComputerManufacturer.Apple,true,OperatingSystem.macOSX,true),
-                new Computer("vrh",new DateTime(2016,8,22),24,3900,ComputerManufacturer.HP,true,OperatingSystem.WindowsXP,true),
-                new Computer("ovo je loš opis,ali i ostali su",new DateTime(2018,5,13),36,6200,ComputerManufacturer.Dell,true,OperatingSystem.Windows8,true),
-                new Computer("crvene boje",new DateTime(2017,12,25),24,4889,ComputerManufacturer.Asus,true,OperatingSystem.Windows8,true)
+            computers.Add(new Computer("oštećen", new DateTime(2005, 11, 23), 36, 5500, ComputerManufacturer.Acer, true, OperatingSystem.Linux, true));
+            computers.Add(new Computer("vrlo skup",new DateTime(2013,1,3),50,15500,ComputerManufacturer.Apple,true,OperatingSystem.macOSX,true));
+            computers.Add(new Computer("vrh",new DateTime(2016,8,22),24,3900,ComputerManufacturer.HP,true,OperatingSystem.WindowsXP,true));
+            computers.Add(new Computer("ovo je loš opis,ali i ostali su",new DateTime(2018,5,13),36,6200,ComputerManufacturer.Dell,true,OperatingSystem.Windows8,true));
+            computers.Add(new Computer("crvene boje",new DateTime(2017,12,25),24,4889,ComputerManufacturer.Asus,true,OperatingSystem.Windows8,true));
 
-            };
-            mobilePhones = new List<MobilePhone>(){
-                new MobilePhone("Ericsson",new DateTime(2015,11,3),12,2500,PhoneManufacturer.Sony,true,"0955585999","Maja","T"),
-                new MobilePhone("iznenađujuće jeftin",new DateTime(2017,6,27),18,5,PhoneManufacturer.Apple,true,"0987777777","Toma","Peric"),
-                new MobilePhone("izdržljiv",new DateTime(2012,2,22),6,3000,PhoneManufacturer.Huawei,true,"0918989898","Tina","Ivanova"),
-                new MobilePhone("A8",new DateTime(2018,10,5),24,4600,PhoneManufacturer.Samsung,true,"0995095099","Alan","Po"),
-                new MobilePhone("neslomljiv",new DateTime(2011,5,29),100,5500,PhoneManufacturer.Nokia,true,"0912212212","Ivo","Ivic")
+            
+            mobilePhones.Add(new MobilePhone("Ericsson", new DateTime(2015, 11, 3), 12, 2500, PhoneManufacturer.Sony, true, "0955585999", "Maja", "T"));
+            mobilePhones.Add(new MobilePhone("iznenađujuće jeftin",new DateTime(2017,6,27),18,5,PhoneManufacturer.Apple,true,"0987777777","Toma","Peric"));
+            mobilePhones.Add(new MobilePhone("izdržljiv",new DateTime(2012,2,22),6,3000,PhoneManufacturer.Huawei,true,"0918989898","Tina","Ivanova"));
+            mobilePhones.Add(new MobilePhone("A8",new DateTime(2018,10,5),24,4600,PhoneManufacturer.Samsung,true,"0995095099","Alan","Po"));
+            mobilePhones.Add(new MobilePhone("neslomljiv", new DateTime(2011, 5, 29), 100, 5500, PhoneManufacturer.Nokia, true, "0912212212", "Ivo", "Ivic"));
 
-            };
-            vehicles = new List<Vehicle>(){
-                new Vehicle("u dobrom stanju",new DateTime(2014,12,3),24,80000,VehicleManufacturer.Ford,new DateTime(2020,11,23),89032),
-                new Vehicle("raspada se",new DateTime(2005,9,23),60,120000,VehicleManufacturer.Suzuki,new DateTime(2019,2,4),1000),
-                new Vehicle("star",new DateTime(2000,8,1),72,110000,VehicleManufacturer.Hyundai,new DateTime(2018,12,23),6700),
-                new Vehicle("super",new DateTime(2007,7,14),60,140000,VehicleManufacturer.Honda,new DateTime(2019,1,20),20000),
-                new Vehicle("nov",new DateTime(2018,4,19),48,200000,VehicleManufacturer.Mercedes,new DateTime(2021,4,12),15685)
 
-            };
-        }
-        static void NewComputer(List<Computer> computers,string description, DateTime purchaseDate, int warrantyLength, double price, ComputerManufacturer computerManufacturer, bool batteries, OperatingSystem os, bool laptop)
-        {
+
+            vehicles.Add(new Vehicle("u dobrom stanju", new DateTime(2014, 12, 3), 24, 80000, VehicleManufacturer.Ford, new DateTime(2020, 11, 23), 89032));
+            vehicles.Add(new Vehicle("raspada se",new DateTime(2005,9,23),60,120000,VehicleManufacturer.Suzuki,new DateTime(2019,2,4),1000));
+            vehicles.Add(new Vehicle("star",new DateTime(2000,8,1),72,110000,VehicleManufacturer.Hyundai,new DateTime(2018,12,23),6700));
+            vehicles.Add(new Vehicle("super",new DateTime(2007,7,14),60,140000,VehicleManufacturer.Honda,new DateTime(2019,1,20),20000));
+            vehicles.Add(new Vehicle("nov",new DateTime(2018,4,19),48,200000,VehicleManufacturer.Mercedes,new DateTime(2021,4,12),15685));
+
             
         }
-        static void NewPhone()
-        { }
-        static void NewVehicle()
-        { }
-        
-       
+
+        static bool EraseComputer(string serialN, List<Computer> computers)
+        {
+            var erased = false;
+            Computer toErase=null;
+            foreach (var c in computers)
+            {
+                if (c.SerialNumber.ToString().Substring(0, 5) == serialN)
+                    toErase = c;
+            }
+            if (toErase != null)
+            {
+                computers.Remove(toErase);
+                erased = true;
+            }
+            return erased;
+        }
+        static bool ErasePhone(string serialN, List<MobilePhone> mobilePhones)
+        {
+            var erased = false;
+            MobilePhone toErase = null;
+            foreach (var m in mobilePhones)
+            {
+                if (m.SerialNumber.ToString().Substring(0, 5) == serialN)
+                    toErase = m;
+            }
+            if (toErase != null)
+            {
+                mobilePhones.Remove(toErase);
+                erased = true;
+            }
+            return erased;
+        }
+        static bool EraseVehicle(string serialN, List<Vehicle> vehicles)
+        {
+            var erased = false;
+            Vehicle toErase = null;
+            foreach (var v in vehicles)
+            {
+                if (v.SerialNumber.ToString().Substring(0, 5) == serialN)
+                    toErase = v;
+            }
+            if (toErase != null)
+            {
+                vehicles.Remove(toErase);
+                erased = true;
+            }
+            return erased;
+        }
+
+
     }
 }
