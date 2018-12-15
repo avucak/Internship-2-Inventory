@@ -333,13 +333,36 @@ namespace KlaseObjekti
                             Console.WriteLine($"serijski broj {c.SerialNumber}, kupljen: {c.PurchaseDate}, mjeseci garancije:{c.WarrantyLength} ");
                         break;
                     case "5":
-
+                        var count = CountBatteries(computers, mobilePhones);
+                        Console.WriteLine("Broj tehološke opreme s baterijama: "+count);
                         break;
                     case "6":
-
+                        Console.WriteLine("Proizvođači mobitela: ");
+                        foreach (var pm in Enum.GetNames(typeof(PhoneManufacturer)))
+                        {
+                            Console.Write(pm + " ");
+                        }
+                        Console.Write("\n");
+                        Console.WriteLine("Po kojem proizvođaču želite pretražiti: ");
+                        var manufacturer = Console.ReadLine();
+                        var searchManufacturer = new List<MobilePhone>();
+                        SearchPhonesByManufacturer(mobilePhones, manufacturer, searchManufacturer);
+                        foreach (var m in searchManufacturer)
+                            Console.WriteLine($"proizvođač:{m.PhoneManufacturer} broj mobitela:{m.PhoneNumber} serijski broj:{m.SerialNumber}");
                         break;
                     case "7":
-
+                        Console.WriteLine("Operacijski sustavi: ");
+                        foreach (var name in Enum.GetNames(typeof(OperatingSystem)))
+                        {
+                            Console.Write(name + " ");
+                        }
+                        Console.Write("\n");
+                        Console.WriteLine("Po kojem OS-u želite pretražiti: ");
+                        var os = Console.ReadLine();
+                        var searchOS = new List<Computer>();
+                        SearchComputersByOS(computers, os, searchOS);
+                        foreach (var c in searchOS)
+                            Console.WriteLine($"OS:{c.OS} proizvođač:{c.ComputerManufacturer} serijski broj:{c.SerialNumber}");
                         break;
                     case "8":
 
@@ -360,14 +383,14 @@ namespace KlaseObjekti
         static void Initialize(List<Computer>computers,List<MobilePhone>mobilePhones,List<Vehicle>vehicles)
         {
             computers.Add(new Computer("oštećen", new DateTime(2005, 11, 23), 36, 5500, ComputerManufacturer.Acer, true, OperatingSystem.Linux, true));
-            computers.Add(new Computer("vrlo skup",new DateTime(2013,1,3),50,15500,ComputerManufacturer.Apple,true,OperatingSystem.macOSX,true));
+            computers.Add(new Computer("vrlo skup",new DateTime(2013,1,3),50,15500,ComputerManufacturer.Apple,false,OperatingSystem.macOSX,false));
             computers.Add(new Computer("vrh",new DateTime(2016,8,22),24,3900,ComputerManufacturer.HP,true,OperatingSystem.WindowsXP,true));
             computers.Add(new Computer("ovo je loš opis,ali i ostali su",new DateTime(2018,5,13),36,6200,ComputerManufacturer.Dell,true,OperatingSystem.Windows8,true));
-            computers.Add(new Computer("crvene boje",new DateTime(2017,12,25),24,4889,ComputerManufacturer.Asus,true,OperatingSystem.Windows8,true));
+            computers.Add(new Computer("crvene boje",new DateTime(2017,12,25),24,4889,ComputerManufacturer.Asus,false,OperatingSystem.Windows8,false));
 
             
             mobilePhones.Add(new MobilePhone("Ericsson", new DateTime(2015, 11, 3), 12, 2500, PhoneManufacturer.Sony, true, "0955585999", "Maja", "T"));
-            mobilePhones.Add(new MobilePhone("iznenađujuće jeftin",new DateTime(2017,6,27),18,5,PhoneManufacturer.Apple,true,"0987777777","Toma","Peric"));
+            mobilePhones.Add(new MobilePhone("iznenađujuće jeftin",new DateTime(2017,6,27),18,5,PhoneManufacturer.Apple,false,"0987777777","Toma","Peric"));
             mobilePhones.Add(new MobilePhone("izdržljiv",new DateTime(2012,2,22),6,3000,PhoneManufacturer.Huawei,true,"0918989898","Tina","Ivanova"));
             mobilePhones.Add(new MobilePhone("A8",new DateTime(2018,10,5),24,4600,PhoneManufacturer.Samsung,true,"0995095099","Alan","Po"));
             mobilePhones.Add(new MobilePhone("neslomljiv", new DateTime(2011, 5, 29), 100, 5500, PhoneManufacturer.Nokia, true, "0912212212", "Ivo", "Ivic"));
@@ -439,6 +462,34 @@ namespace KlaseObjekti
                 if (c.PurchaseDate.AddMonths(c.WarrantyLength).Year==year)
                     warrantyExpires.Add(c);
 
+            }
+        }
+        static int CountBatteries(List<Computer> computers, List<MobilePhone> phones)
+        {
+            var count = 0;
+            foreach (Computer c in computers)
+                if (c.Batteries)
+                    count++;
+            foreach (MobilePhone p in phones)
+                if (p.Batteries)
+                    count++;
+            return count;
+        }
+
+        static void SearchPhonesByManufacturer(List<MobilePhone> phones,string manufacturer, List<MobilePhone> searchManufacturer)
+        {
+            foreach (var m in phones)
+            {
+                if (m.PhoneManufacturer.ToString().ToLower() == manufacturer.ToLower())
+                    searchManufacturer.Add(m);
+            }
+        }
+        static void SearchComputersByOS(List<Computer> computers, string os, List<Computer> searchOS)
+        {
+            foreach (var c in computers)
+            {
+                if (c.OS.ToString().ToLower() == os.ToLower())
+                    searchOS.Add(c);
             }
         }
 
