@@ -25,26 +25,58 @@ namespace KlaseObjekti
             string choice;
             do
             {
+                Console.WriteLine("Odaberite opciju: ");
                 choice = Console.ReadLine();
                 switch (choice)
                 {
                     case "1":
                         Console.WriteLine("Za unos kompjutera unesite 1, za unos mobitela 2, a za unos vozila 3");
                         var choice2 = Console.ReadLine();
+                        var year = 0;
+                        var month = 0;
+                        var day = 0;
+                        var warranty =0;
+                        var price = 0.0;
+                        var flag = false;
                         if (choice2 == "1")
                         {
                             Console.WriteLine("Unos kompjutera\nUnesite opis:");
                             var description = Console.ReadLine();
-                            Console.WriteLine("Unesite godinu kada je kupljen:");
-                            var year = int.Parse(Console.ReadLine());
-                            Console.WriteLine("Unesite mjesec kada je kupljen:");
-                            var month= int.Parse(Console.ReadLine());
-                            Console.WriteLine("Unesite dan kada je kupljen");
-                            var day = int.Parse(Console.ReadLine());
-                            Console.WriteLine("Broj mjeseci garancije:");
-                            var warranty = int.Parse(Console.ReadLine());
-                            Console.WriteLine("Cijena:");
-                            var price = int.Parse(Console.ReadLine());
+                            while (!flag)
+                            {
+                                Console.WriteLine("Unesite godinu kada je kupljen:");
+                                flag = int.TryParse(Console.ReadLine(), out year);
+
+                            }
+                            flag = false;
+                            while (!flag)
+                            {
+                                Console.WriteLine("Unesite mjesec kada je kupljen:");
+                                flag = int.TryParse(Console.ReadLine(), out month);
+                                if (month < 1 || month > 12)
+                                    flag = false;  
+                            }
+                            flag = false;
+                            while (!flag)
+                            {
+                                Console.WriteLine("Unesite dan kada je kupljen");
+                                flag = int.TryParse(Console.ReadLine(), out day);
+                                if (day < 1 || day> 31)
+                                    flag = false;
+
+                            }
+                            flag = false;
+                            while (!flag)
+                            {
+                                Console.WriteLine("Broj mjeseci garancije:");
+                                flag = int.TryParse(Console.ReadLine(), out warranty);
+                            }
+                            flag = false;
+                            while (!flag)
+                            {
+                                Console.WriteLine("Cijena:");
+                                flag = double.TryParse(Console.ReadLine(), out price);
+                            }
                             Console.WriteLine("Koji je proizvođač, od ponuđenih");
                             foreach (var name in Enum.GetNames(typeof(ComputerManufacturer)))
                             {
@@ -52,7 +84,7 @@ namespace KlaseObjekti
                             }
                             Console.Write("\n");
                             
-                            var flag = false;
+                            
                             ComputerManufacturer computerManufacturer=ComputerManufacturer.Acer;
                             while (!flag)
                             {   var input = Console.ReadLine();
@@ -129,16 +161,41 @@ namespace KlaseObjekti
                         {
                             Console.WriteLine("Unos mobitela\nUnesite opis:");
                             var description = Console.ReadLine();
-                            Console.WriteLine("Unesite godinu kada je kupljen:");
-                            var year = int.Parse(Console.ReadLine());
-                            Console.WriteLine("Unesite mjesec kada je kupljen:");
-                            var month = int.Parse(Console.ReadLine());
-                            Console.WriteLine("Unesite dan kada je kupljen");
-                            var day = int.Parse(Console.ReadLine());
-                            Console.WriteLine("Broj mjeseci garancije:");
-                            var warranty = int.Parse(Console.ReadLine());
-                            Console.WriteLine("Cijena:");
-                            var price = int.Parse(Console.ReadLine());
+                            while (!flag)
+                            {
+                                Console.WriteLine("Unesite godinu kada je kupljen:");
+                                flag = int.TryParse(Console.ReadLine(), out year);
+
+                            }
+                            flag = false;
+                            while (!flag)
+                            {
+                                Console.WriteLine("Unesite mjesec kada je kupljen:");
+                                flag = int.TryParse(Console.ReadLine(), out month);
+                                if (month < 1 || month > 12)
+                                    flag = false;
+                            }
+                            flag = false;
+                            while (!flag)
+                            {
+                                Console.WriteLine("Unesite dan kada je kupljen");
+                                flag = int.TryParse(Console.ReadLine(), out day);
+                                if (day < 1 || day > 31)
+                                    flag = false;
+
+                            }
+                            flag = false;
+                            while (!flag)
+                            {
+                                Console.WriteLine("Broj mjeseci garancije:");
+                                flag = int.TryParse(Console.ReadLine(), out warranty);
+                            }
+                            flag = false;
+                            while (!flag)
+                            {
+                                Console.WriteLine("Cijena:");
+                                flag = double.TryParse(Console.ReadLine(), out price);
+                            }
                             Console.WriteLine("Koji je proizvođač, od ponuđenih");
                             foreach (var pm in Enum.GetNames(typeof(PhoneManufacturer)))
                             {
@@ -146,7 +203,7 @@ namespace KlaseObjekti
                             }
                             Console.Write("\n");
 
-                            var flag = false;
+                            flag = false;
                             PhoneManufacturer phoneManufacturer = PhoneManufacturer.Apple;
                             while (!flag)
                             {
@@ -193,16 +250,41 @@ namespace KlaseObjekti
                         {
                             Console.WriteLine("Unos vozila\nUnesite opis:");
                             var description = Console.ReadLine();
-                            Console.WriteLine("Unesite godinu kada je kupljen:");
-                            var year = int.Parse(Console.ReadLine());
-                            Console.WriteLine("Unesite mjesec kada je kupljen:");
-                            var month = int.Parse(Console.ReadLine());
-                            Console.WriteLine("Unesite dan kada je kupljen");
-                            var day = int.Parse(Console.ReadLine());
-                            Console.WriteLine("Broj mjeseci garancije:");
-                            var warranty = int.Parse(Console.ReadLine());
-                            Console.WriteLine("Cijena:");
-                            var price = int.Parse(Console.ReadLine());
+                            while (!flag)
+                            {
+                                Console.WriteLine("Unesite godinu kada je kupljen:");
+                                flag = int.TryParse(Console.ReadLine(), out year);
+
+                            }
+                            flag = false;
+                            while (!flag)
+                            {
+                                Console.WriteLine("Unesite mjesec kada je kupljen:");
+                                flag = int.TryParse(Console.ReadLine(), out month);
+                                if (month < 1 || month > 12)
+                                    flag = false;
+                            }
+                            flag = false;
+                            while (!flag)
+                            {
+                                Console.WriteLine("Unesite dan kada je kupljen");
+                                flag = int.TryParse(Console.ReadLine(), out day);
+                                if (day < 1 || day > 31)
+                                    flag = false;
+
+                            }
+                            flag = false;
+                            while (!flag)
+                            {
+                                Console.WriteLine("Broj mjeseci garancije:");
+                                flag = int.TryParse(Console.ReadLine(), out warranty);
+                            }
+                            flag = false;
+                            while (!flag)
+                            {
+                                Console.WriteLine("Cijena:");
+                                flag = double.TryParse(Console.ReadLine(), out price);
+                            }
                             Console.WriteLine("Koji je proizvođač, od ponuđenih");
                             foreach (var name in Enum.GetNames(typeof(VehicleManufacturer)))
                             {
@@ -210,7 +292,7 @@ namespace KlaseObjekti
                             }
                             Console.Write("\n");
 
-                            var flag = false;
+                            flag = false;
                             VehicleManufacturer vehicleManufacturer = VehicleManufacturer.Ford;
                             while (!flag)
                             {
@@ -228,14 +310,40 @@ namespace KlaseObjekti
                                     Console.WriteLine("Niste upisali jedan od ponuđenih, ponovite: ");
                                 }
                             }
-                            Console.WriteLine("Unesite godinu kada ističe registracija:");
-                            var yearE = int.Parse(Console.ReadLine());
-                            Console.WriteLine("Unesite mjesec:");
-                            var monthE = int.Parse(Console.ReadLine());
-                            Console.WriteLine("Unesite dan");
-                            var dayE = int.Parse(Console.ReadLine());
-                            Console.WriteLine("Kilometraza na vozilu: ");
-                            var mileage = int.Parse(Console.ReadLine());
+                            flag = false;
+                            var yearE = 0;
+                            var monthE = 0;
+                            var dayE = 0;
+                            var mileage = 0;
+                            while (!flag)
+                            {
+                                Console.WriteLine("Unesite godinu kada ističe registracija:");
+                                flag = int.TryParse(Console.ReadLine(), out yearE);
+
+                            }
+                            flag = false;
+                            while (!flag)
+                            {
+                                Console.WriteLine("Unesite mjesec");
+                                flag = int.TryParse(Console.ReadLine(), out monthE);
+                                if (monthE < 1 || monthE > 12)
+                                    flag = false;
+                            }
+                            flag = false;
+                            while (!flag)
+                            {
+                                Console.WriteLine("Unesite dan:");
+                                flag = int.TryParse(Console.ReadLine(), out dayE);
+                                if (dayE < 1 || dayE > 31)
+                                    flag = false;
+
+                            }
+                            flag = false;
+                            while (!flag)
+                            {
+                                Console.WriteLine("Kilometraza na vozilu: ");
+                                flag = int.TryParse(Console.ReadLine(), out mileage);
+                             }
                             vehicles.Add(new Vehicle(description, new DateTime(year, month, day), warranty, price, vehicleManufacturer, new DateTime(yearE, monthE, dayE), mileage));
                         }
                         else

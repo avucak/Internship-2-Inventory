@@ -11,7 +11,6 @@ namespace KlaseObjekti
         public DateTime PurchaseDate { get; set; }
         public int WarrantyLength { get; set; }
         public double Price { get; set; }
-        //public string Brand { get; set; }
 
         public Inventory(string description, DateTime purchaseDate, int warrantyLength, double price)
         {
@@ -20,7 +19,6 @@ namespace KlaseObjekti
             PurchaseDate = purchaseDate;
             WarrantyLength = warrantyLength;
             Price = price;
-            //Brand = brand;
         }
     }
 }

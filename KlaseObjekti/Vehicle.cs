@@ -6,7 +6,7 @@ namespace KlaseObjekti
 {
     public class Vehicle :Inventory
     {
-        public DateTime RegistrationExpiration {get; set;}
+        public DateTime RegistrationExpiration { get; set; }
         public int Mileage { get; set; }
         public VehicleManufacturer VehicleManufacturer { get; set; }
         public Vehicle( string description, DateTime purchaseDate, int warrantyLength, double price, VehicleManufacturer vehicleManufacturer, DateTime registrationExpiration, int mileage)
