@@ -365,10 +365,19 @@ namespace KlaseObjekti
                             Console.WriteLine($"OS:{c.OS} proizvođač:{c.ComputerManufacturer} serijski broj:{c.SerialNumber}");
                         break;
                     case "8":
-
+                        Console.WriteLine("Za koju godinu želite popis mobitela kojima garancija tada istječe:");
+                        var yearWarrantyExpires = int.Parse(Console.ReadLine());
+                        var warrantyExpiresPhones = new List<MobilePhone>();
+                        ListPhonesByYear(yearWarrantyExpires, mobilePhones, warrantyExpiresPhones);
+                        foreach (var p in warrantyExpiresPhones)
+                            Console.WriteLine($"ime vlasnika:{p.OwnerName} prezime vlasnika:{p.OwnerSurname}  broj mobitela {p.PhoneNumber}");
                         break;
                     case "9":
-
+                        Console.WriteLine("Ispis vozila kojima registracija ističe sljedećih mjesec dana:");
+                        var warrantyExpiresVehicles = new List<Vehicle>();
+                        InTheNextMonth( vehicles, warrantyExpiresVehicles);
+                        foreach (var v in warrantyExpiresVehicles)
+                            Console.WriteLine($"serijski broj:{v.SerialNumber} proizvođač:{v.VehicleManufacturer} registracija istjece:{v.RegistrationExpiration}");
                         break;
                     case "10":
 
@@ -400,7 +409,7 @@ namespace KlaseObjekti
             vehicles.Add(new Vehicle("u dobrom stanju", new DateTime(2014, 12, 3), 24, 80000, VehicleManufacturer.Ford, new DateTime(2020, 11, 23), 89032));
             vehicles.Add(new Vehicle("raspada se",new DateTime(2005,9,23),60,120000,VehicleManufacturer.Suzuki,new DateTime(2019,2,4),1000));
             vehicles.Add(new Vehicle("star",new DateTime(2000,8,1),72,110000,VehicleManufacturer.Hyundai,new DateTime(2018,12,23),6700));
-            vehicles.Add(new Vehicle("super",new DateTime(2007,7,14),60,140000,VehicleManufacturer.Honda,new DateTime(2019,1,20),20000));
+            vehicles.Add(new Vehicle("super",new DateTime(2007,7,14),60,140000,VehicleManufacturer.Honda,new DateTime(2019,1,11),20000));
             vehicles.Add(new Vehicle("nov",new DateTime(2018,4,19),48,200000,VehicleManufacturer.Mercedes,new DateTime(2021,4,12),15685));
 
             
@@ -457,7 +466,7 @@ namespace KlaseObjekti
 
         static void ListComputersByYear(int year,List<Computer>computers,List<Computer>warrantyExpires)
         {
-            foreach (Computer c in computers)
+            foreach (var c in computers)
             {
                 if (c.PurchaseDate.AddMonths(c.WarrantyLength).Year==year)
                     warrantyExpires.Add(c);
@@ -467,10 +476,10 @@ namespace KlaseObjekti
         static int CountBatteries(List<Computer> computers, List<MobilePhone> phones)
         {
             var count = 0;
-            foreach (Computer c in computers)
+            foreach (var c in computers)
                 if (c.Batteries)
                     count++;
-            foreach (MobilePhone p in phones)
+            foreach (var p in phones)
                 if (p.Batteries)
                     count++;
             return count;
@@ -492,7 +501,25 @@ namespace KlaseObjekti
                     searchOS.Add(c);
             }
         }
+        static void ListPhonesByYear(int year, List<MobilePhone> phones, List<MobilePhone> warrantyExpires)
+        {
+            foreach (var p in phones)
+            {
+                if (p.PurchaseDate.AddMonths(p.WarrantyLength).Year == year)
+                    warrantyExpires.Add(p);
+            }
+        }
+        static void InTheNextMonth(List<Vehicle> vehicles,List<Vehicle> warrantyExpires)
+        {
 
+            foreach (var v in vehicles)
+            {
+                var difference = Math.Abs((DateTime.Now - v.RegistrationExpiration).TotalDays);
+                if (difference<=30)
+                        warrantyExpires.Add(v);
+            }
+        }
 
     }
 }
+ 
