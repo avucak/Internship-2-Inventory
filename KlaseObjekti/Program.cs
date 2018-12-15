@@ -13,7 +13,8 @@ namespace KlaseObjekti
                 "\n7.Ispis računala s određenim operacijskim sustavom"+
                 "\n8.Ispis imena i brojeva vlasnika mobitela kojima garancija ističe u određenoj godini"+
                 "\n9.Ispis vozila koijma registracija ističe u sljedećih mjesec dana"+
-                "\n10.Ispis cijene sve opreme, pri kupnji, trenutno te razliku");
+                "\n10.Ispis cijene sve opreme, pri kupnji, trenutno te razliku"+
+                "\n11.Završetak rada");
 
             List<Computer> computers=new List<Computer>();
             List<MobilePhone> mobilePhones=new List<MobilePhone>();
@@ -380,13 +381,34 @@ namespace KlaseObjekti
                             Console.WriteLine($"serijski broj:{v.SerialNumber} proizvođač:{v.VehicleManufacturer} registracija istjece:{v.RegistrationExpiration}");
                         break;
                     case "10":
-
+                        Console.WriteLine("Cijene vozila:");
+                        double newPriceWehicle;
+                        foreach (var v in vehicles)
+                        {
+                            newPriceWehicle = PriceVehicle(v.Price, v.Mileage);
+                            var difference = v.Price - newPriceWehicle;
+                            Console.WriteLine($"serijski broj:{v.SerialNumber} pocetna cijena:{v.Price} kilometraza:{v.Mileage} trenutna cijena:{newPriceWehicle} razlika:{difference}");
+                        }
+                        Console.WriteLine("Cijene opreme:");
+                        double newPriceEquipment;
+                        foreach (var m in mobilePhones)
+                        {
+                            newPriceEquipment = PriceEquipment(m.Price, m.PurchaseDate);
+                            var difference = m.Price - newPriceEquipment;
+                            Console.WriteLine($"serijski broj:{m.SerialNumber} pocetna cijena:{m.Price} kupljen:{m.PurchaseDate} trenutna cijena:{newPriceEquipment} razlika:{difference}");
+                        }
+                        foreach (var c in computers)
+                        {
+                            newPriceEquipment = PriceEquipment(c.Price, c.PurchaseDate);
+                            var difference = c.Price - newPriceEquipment;
+                            Console.WriteLine($"serijski broj:{c.SerialNumber} pocetna cijena:{c.Price} kupljen:{c.PurchaseDate} trenutna cijena:{newPriceEquipment} razlika:{difference}");
+                        }
                         break;
                     default:
                         break;
                 }
             }
-            while (choice != "10");
+            while (choice != "11");
 
         }
         static void Initialize(List<Computer>computers,List<MobilePhone>mobilePhones,List<Vehicle>vehicles)
@@ -410,7 +432,7 @@ namespace KlaseObjekti
             vehicles.Add(new Vehicle("raspada se",new DateTime(2005,9,23),60,120000,VehicleManufacturer.Suzuki,new DateTime(2019,2,4),1000));
             vehicles.Add(new Vehicle("star",new DateTime(2000,8,1),72,110000,VehicleManufacturer.Hyundai,new DateTime(2018,12,23),6700));
             vehicles.Add(new Vehicle("super",new DateTime(2007,7,14),60,140000,VehicleManufacturer.Honda,new DateTime(2019,1,11),20000));
-            vehicles.Add(new Vehicle("nov",new DateTime(2018,4,19),48,200000,VehicleManufacturer.Mercedes,new DateTime(2021,4,12),15685));
+            vehicles.Add(new Vehicle("nov",new DateTime(2018,4,19),48,200000,VehicleManufacturer.Mercedes,new DateTime(2021,4,12),1568500));
 
             
         }
@@ -518,6 +540,30 @@ namespace KlaseObjekti
                 if (difference<=30)
                         warrantyExpires.Add(v);
             }
+        }
+        static double PriceVehicle(double startPrice, int mileage)
+        {
+            var price=startPrice;
+            var by10 = (int)mileage / 20000;
+            var limit = 0.2 * startPrice;
+            for (int i = 0; i < by10; i++)
+            {
+                price = 0.9 * price;
+            }
+            if (price < limit)
+                price = limit;
+            return price;
+        }
+
+        static double PriceEquipment(double startPrice, DateTime purchased)
+        {
+            var price = startPrice;
+            var months = (int)(DateTime.Now- purchased).TotalDays / 30;
+            var limit = 0.3 * startPrice;
+            price = Math.Pow(0.95, months) * startPrice;
+            if (price < limit)
+                price = limit;
+            return price;
         }
 
     }
